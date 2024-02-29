@@ -178,7 +178,9 @@ sudo systemctl start slurmd
 cd /storage
 sudo dpkg -i slurm-23.11.4_1.0_amd64.deb
 sudo cp /storage/slurm_ubuntu_gpu_cluster/configs_services/slurmd.service /etc/systemd/system
+```
 Open ports for slurm communcation:
+```
 sudo ufw allow from any to any port 6817
 sudo ufw allow from any to any port 6818
 sudo systemctl enable slurmd
