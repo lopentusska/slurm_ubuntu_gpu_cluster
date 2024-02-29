@@ -35,7 +35,7 @@ You can follow this [guide](https://computingforgeeks.com/install-and-configure-
 
 Additionally, after step one (Set hostname on the server) of the guide in ```/etc/hosts``` after ```<IP> <FQDN>``` add ```<name>``` of the node so it would look like ```111.xx.111.xx master_node.master.local master_node```.  
 
-Also, on worker_node add IP, FQDN and name of the master_node ```111.xx.111.xx master_node.master.local master_node``` in ```etc/hosts```. So in worker_node you would have both master and worker nodes IPs, FQDNs and names.
+Also, on worker_node add IP, FQDN and name of the master_node ```111.xx.111.xx master_node.master.local master_node``` in ```etc/hosts``` and IP, FQDN and name of the worker_node itself. So in worker_node you would have both master and worker nodes IPs, FQDNs and names.
 ### Create munge and slurm users:
 Master and Worker nodes:
 ```
