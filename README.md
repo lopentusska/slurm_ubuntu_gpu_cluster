@@ -93,7 +93,7 @@ munge -n | unmunge | grep STATUS
 ### Clone this repo with config and service files:
 ```
 cd /storage
-git clone https://github.com/lopentusska/slurm
+git clone https://github.com/lopentusska/slurm_ubuntu_gpu_cluster
 ```
 ### Install prerequisites for DB:
 ```
@@ -112,7 +112,7 @@ grant all privileges on slurm_acct_db.* to 'slurm'@'localhost';
 flush privileges;
 exit
 ```
-Copy db config: ```cp /storage/slurm/configs/slurmdbd.conf /storage```
+Copy db config: ```cp /storage/slurm_ubuntu_gpu_cluster/configs_services/slurmdbd.conf /storage```
 # Set up Slurm:
 ## Download and install Slurm on master node
 ### Build installation file
@@ -140,8 +140,8 @@ sudo chown slurm /var/spool/slurm/ctld /var/spool/slurm/d /var/log/slurm
 ```
 Copy slurm services:
 ```
-sudo cp /storage/slurm/configs/slurmdbd.service /etc/systemd/system/
-sudo cp /storage/slurm/configs/slurmctld.service /etc/systemd/system/
+sudo cp /storage/slurm_ubuntu_gpu_cluster/configs_services/slurmdbd.service /etc/systemd/system/
+sudo cp /storage/slurm_ubuntu_gpu_cluster/configs_services/slurmctld.service /etc/systemd/system/
 ```
 Copy slurm DB config:
 ```
@@ -164,7 +164,7 @@ sudo systemctl start slurmctld
 ```
 If master is a compute (worker) node:
 ```
-sudo cp /storage/slurm/configs/slurmd.service /etc/systemd/system/
+sudo cp /storage/slurm_ubuntu_gpu_cluster/configs_services/slurmd.service /etc/systemd/system/
 sudo systemctl enable slurmd
 sudo systemctl start slurmd
 ```
@@ -172,7 +172,7 @@ sudo systemctl start slurmd
 ```
 cd /storage
 sudo dpkg -i slurm-23.11.4_1.0_amd64.deb
-sudo cp /storage/slurm/configs_services/slurmd.service /etc/systemd/system
+sudo cp /storage/slurm_ubuntu_gpu_cluster/configs_services/slurmd.service /etc/systemd/system
 Open ports for slurm communcation:
 sudo ufw allow from any to any port 6817
 sudo ufw allow from any to any port 6818
@@ -180,18 +180,18 @@ sudo systemctl enable slurmd
 sudo systemctl start slurmd
 ```
 ### Configure Slurm
-In ```slurm.conf``` change:  
+In ```/storage/slurm_ubuntu_gpu_cluster/configs_services/slurm.conf``` change:  
 ```ControlMachine=master_node.master.local``` - use your FQDN
 ```ControlAddr=111.xx.111.xx``` - use IP of your master_node
 ```
-sudo cp /storage/slurm/configs_services/slurm.conf /storage/
+sudo cp /storage/slurm_ubuntu_gpu_cluster/configs_services/slurm.conf /storage/
 ```
 Use ```sudo slurmd -C``` to print out machine specs. You should copy it in slurm.conf file and modify it.  
 example of how it should look in your config file:
 ```
 NodeName=master_node NodeAddr=111.xx.111.xx Gres=gpu:1 CPUs=16 Boards=1 SocketsPerBoard=1 CoresPerSocket=8 ThreadsPerCore=2 RealMemory=63502
 ```
-Edit gres.conf file.
+Edit /storage/slurm_ubuntu_gpu_cluster/configs_services/gres.conf file.
 ```
 NodeName=master_node Name=gpu File=/dev/nvidia0
 NodeName=worker_node Name=gpu File=/dev/nvidia0
@@ -200,9 +200,9 @@ You can use ```nvidia-smi``` to find out the number you should use instead of ``
 Copy .conf files (except slurmdbd.conf) on all machines:  
 on worker_node create slurm directory: ```sudo mkdir /etc/slurm/```
 ```
-sudo cp /storage/slurm/configs_services/cgroup* /etc/slurm/
-sudo cp /storage/slurm/configs_services/slurm.conf /etc/slurm/
-sudo cp /storage/slurm/configs_services/gres.conf /etc/slurm/
+sudo cp /storage/slurm_ubuntu_gpu_cluster/configs_services/cgroup* /etc/slurm/
+sudo cp /storage/slurm_ubuntu_gpu_cluster/configs_services/slurm.conf /etc/slurm/
+sudo cp /storage/slurm_ubuntu_gpu_cluster/configs_services/gres.conf /etc/slurm/
 ```
 ```
 sudo mkdir -p /var/spool/slurm/d
