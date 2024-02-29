@@ -4,23 +4,25 @@ add ssh set up
 # slurm
 Set up gpu cluster on Ubuntu 22.04 using slurm.
 ### Acknowledgements
-Thanks to nateGeorge for the [guide](https://github.com/nateGeorge/slurm_gpu_ubuntu?tab=readme-ov-file) he wrote. I would highly recommend checking out this guide first as it is way more descriptive.
+Thanks to nateGeorge for the [guide](https://github.com/nateGeorge/slurm_gpu_ubuntu?tab=readme-ov-file) he wrote. I would highly recommend checking it out first as it is way more descriptive.
 # Assumptions:
 - master_node 111.xx.111.xx
 - worker_node 222.xx.222.xx
 - master_node FQDN = master_node.master.local
 # Steps:
 - SYNC GID/UIDs
-- Sync time
-- Configure NFS
-- Configure MUNGE
-- Configure DB for Slurm
-- Install and Configure Slurm
+- Synchronize time
+- Set up NFS
+- Set up MUNGE
+- Set up DB for Slurm
+- Set up Slurm
 # Sync GID/UIDs
 ### LDAP Account Manager
 You can follow this [guide](https://computingforgeeks.com/install-and-configure-openldap-server-ubuntu/) to install and configure LDAP Account Manager.  
+
 Additionally, after step one (Set hostname on the server) of the guide in ```/etc/hosts``` after ```<IP> <FQDN>``` add ```<name>``` of the node so it would look like ```111.xx.111.xx master_node.master.local master_node```.  
-Also, on worker_node add ip, FQDN and name of the master_node ```111.xx.111.xx master_node.master.local master_node``` in ```etc/hosts```. So in worker_node you would have both master and worker nodes IPs, FQDNs and names.
+
+Also, on worker_node add IP, FQDN and name of the master_node ```111.xx.111.xx master_node.master.local master_node``` in ```etc/hosts```. So in worker_node you would have both master and worker nodes IPs, FQDNs and names.
 ### Create munge and slurm users:
 Master and Worker nodes:
 ```
@@ -58,7 +60,7 @@ sudo chown worker_node:worker_node /storage/
 paswordless ssh
 ssh-keygen
 ssh-copy-id woker_node@222.xx.222.xx
-# Install MUNGE
+# Set up MUNGE
 Master node:
 ```
 sudo apt-get install libmunge-dev libmunge2 munge -y
@@ -77,13 +79,13 @@ sudo systemctl enable munge
 sudo systemctl start munge
 munge -n | unmunge | grep STATUS
 ```
-# Configure DB for Slurm
+# Set up DB for Slurm
 ### Clone this repo with config and service files:
 ```
 cd /storage
 git clone https://github.com/lopentusska/slurm
 ```
-### Set up DB:
+### Install prerequisites for DB:
 ```
 sudo apt-get install python3 gcc make openssl ruby ruby-dev libpam0g-dev libmariadb-dev mariadb-server build-essential libssl-dev numactl hwloc libmunge-dev man2html lua5.3 -y
 sudo gem install fpm
@@ -101,7 +103,7 @@ flush privileges;
 exit
 ```
 Copy db config: ```cp /storage/slurm/configs/slurmdbd.conf /storage```
-# Install and Configure Slurm:
+# Set up Slurm:
 ## Download and install Slurm on master node
 ### Build installation file
 You should check slurm [download](https://download.schedmd.com/slurm/) page and install the latest version.
@@ -156,7 +158,7 @@ sudo cp /storage/slurm/configs/slurmd.service /etc/systemd/system/
 sudo systemctl enable slurmd
 sudo systemctl start slurmd
 ```
-## Worker node:
+## Install Slurm on worker node:
 ```
 cd /storage
 sudo dpkg -i slurm-23.11.4_1.0_amd64.deb
@@ -222,10 +224,3 @@ sudo apt update
 sudo apt upgrade
 sudo apt autoremove
 ```
-
-notes (delete later):
-if drain nodes:
-sudo scontrol update NodeName=master_node State=RESUME
-sudo scontrol update NodeName=worker_node State=RESUME
-on worker:
-srun -w worker_node hostname
