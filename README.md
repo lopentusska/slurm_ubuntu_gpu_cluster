@@ -195,10 +195,10 @@ In ```/storage/slurm_ubuntu_gpu_cluster/configs_services/slurm.conf``` change:
 
 ```ControlAddr=111.xx.111.xx``` - use IP of your master_node
 
-Use ```sudo slurmd -C``` to print out machine specs. You should copy it in slurm.conf file and modify it.  
+Use ```sudo slurmd -C``` to print out machine specs. You should copy specs of all machines in slurm.conf file and modify it.  
 example of how it should look in your config file:
 ```
-NodeName=master_node NodeAddr=111.xx.111.xx Gres=gpu:1 CPUs=16 Boards=1 SocketsPerBoard=1 CoresPerSocket=8 ThreadsPerCore=2 RealMemory=63502
+NodeName=masternode NodeAddr=111.xx.111.xx Gres=gpu:1 CPUs=16 Boards=1 SocketsPerBoard=1 CoresPerSocket=8 ThreadsPerCore=2 RealMemory=63502
 ```
 After you are done with ```slurm.conf``` editing:
 ```
