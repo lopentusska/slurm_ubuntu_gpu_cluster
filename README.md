@@ -16,6 +16,7 @@ Thanks to nateGeorge for the [guide](https://github.com/nateGeorge/slurm_gpu_ubu
 - [Set up MUNGE](https://github.com/lopentusska/slurm_ubuntu_gpu_cluster?tab=readme-ov-file#set-up-munge)
 - [Set up DB for Slurm](https://github.com/lopentusska/slurm_ubuntu_gpu_cluster?tab=readme-ov-file#set-up-db-for-slurm)
 - [Set up Slurm](https://github.com/lopentusska/slurm_ubuntu_gpu_cluster?tab=readme-ov-file#set-up-slurm)
+- [Logs](https://github.com/lopentusska/slurm_ubuntu_gpu_cluster?tab=readme-ov-file#Logs)
 # Install nvidia drivers
 If you need to install nvidia drivers, use this [guide](https://gist.github.com/denguir/b21aa66ae7fb1089655dd9de8351a202#install-nvidia-drivers).
 # Set up passwordless ssh
@@ -255,3 +256,13 @@ sudo apt update
 sudo apt upgrade
 sudo apt autoremove
 ```
+# Logs
+### If something doesn't work, you can find logs for ```slurmctld```, ```slurmdbd``` and ```slurmd``` in ```/var/log/slurm/```.
+# Script
+I've also added a simple script to check if slurm works that would run ```srun hostname```, which basically will print out the node on which the job was started.
+You will need to move the file in the ```/storage```.
+Inside the script change:
+```partition```, 
+```nodelist``` (choose on which node to run),
+Then you can run script with:
+```sbatch script_slurm_hostname.sh```
