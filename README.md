@@ -224,7 +224,10 @@ Create cluster: ```sudo sacctmgr add cluster compute-cluster```
 ```
 sudo vim /etc/default/grub
 ```
+add:
+```
 GRUB_CMDLINE_LINUX_DEFAULT="cgroup_enable=memory systemd.unified_cgroup_hierarchy=0"
+```
 ```
 sudo update-grub
 ```
