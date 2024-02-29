@@ -54,6 +54,7 @@ sudo ufw allow ntp
 ```
 # Set up NFS
 I will show my steps below but you could use this [guide](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-16-04) as well
+
 Master node:
 ```
 sudo apt-get update
