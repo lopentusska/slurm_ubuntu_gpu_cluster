@@ -208,7 +208,7 @@ sudo cp /storage/slurm/configs_services/gres.conf /etc/slurm/
 sudo mkdir -p /var/spool/slurm/d
 sudo chown slurm /var/spool/slurm/d
 ```
-Reboot machines and:
+Reboot machines and:  
 on master_node:
 ```
 sudo systemctl restart slurmctld
