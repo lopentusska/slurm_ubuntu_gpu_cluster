@@ -1,7 +1,7 @@
 # slurm_gpu_cluster
 Set up gpu cluster on Ubuntu 22.04 using slurm (with cgroups).
 ### Acknowledgements
-Thanks to nateGeorge for the [guide](https://github.com/nateGeorge/slurm_gpu_ubuntu?tab=readme-ov-file) he wrote. I would highly recommend checking it out first as it is way more descriptive.
+Thanks to nateGeorge for the [guide](https://github.com/nateGeorge/slurm_gpu_ubuntu?tab=readme-ov-file) he wrote. I would highly recommend checking it out first as it is very descriptive.
 # Assumptions:
 - master_node 111.xx.111.xx
 - worker_node 222.xx.222.xx
