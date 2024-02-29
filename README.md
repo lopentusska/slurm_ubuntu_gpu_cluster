@@ -3,10 +3,10 @@ Guide on how to set up gpu cluster on Ubuntu 22.04 using slurm (with cgroups).
 ### Acknowledgements
 Thanks to nateGeorge for the [guide](https://github.com/nateGeorge/slurm_gpu_ubuntu?tab=readme-ov-file) he wrote. I would highly recommend checking it out first as it is very descriptive.
 # Assumptions:
-- master_node 111.xx.111.xx
-- worker_node 222.xx.222.xx
-- master_node FQDN = master_node.master.local
-- worker_node FQDN = worker_node.worker.local
+- masternode 111.xx.111.xx
+- workernode 222.xx.222.xx
+- masternode FQDN = masternode.master.local
+- workernode FQDN = workernode.worker.local
 # Steps:
 - [Install nvidia drivers](https://github.com/lopentusska/slurm_ubuntu_gpu_cluster?tab=readme-ov-file#install-nvidia-drivers)
 - [Set up passwordless ssh](https://github.com/lopentusska/slurm_ubuntu_gpu_cluster?tab=readme-ov-file#set-up-passwordless-ssh)
@@ -34,12 +34,12 @@ ssh-copy-id worker_node@222.xx.222.xx
 ### LDAP Account Manager
 You can follow this [guide](https://computingforgeeks.com/install-and-configure-openldap-server-ubuntu/) to install and configure LDAP Account Manager.  
 
-Additionally, after step one (Set hostname on the server) of the guide in ```/etc/hosts``` after ```<IP> <FQDN>``` add ```<name>``` of the node so it would look like ```111.xx.111.xx master_node.master.local master_node```.  
+Additionally, after step one (Set hostname on the server) of the guide in ```/etc/hosts``` after ```<IP> <FQDN>``` add ```<name>``` of the node so it would look like ```111.xx.111.xx masternode.master.local masternode```.  
 
 Also, on worker_node do the following:
 - set FQDN for the worker_node:
-```sudo hostnamectl set-hostname worker_node.worker.local```
-- add IP, FQDN and name of the worker_node ```222.xx.222.xx worker_node.worker.local worker_node``` and add IP, FQDN and name of the master_node ```111.xx.111.xx master_node.master.local master_node``` in ```etc/hosts```. So in worker_node you would have both master and worker nodes IPs, FQDNs and names.
+```sudo hostnamectl set-hostname workernode.worker.local```
+- add IP, FQDN and name of the workernode ```222.xx.222.xx workernode.worker.local workernode``` and add IP, FQDN and name of the masternode ```111.xx.111.xx masternode.master.local masternode``` in ```etc/hosts```. So in worker_node ```etc/hosts``` you would have both master and worker nodes IPs, FQDNs and names.
 ### Create munge and slurm users:
 Master and Worker nodes:
 ```
@@ -191,9 +191,9 @@ sudo systemctl start slurmd
 ### Configure Slurm
 In ```/storage/slurm_ubuntu_gpu_cluster/configs_services/slurm.conf``` change:
 
-```ControlMachine=master_node.master.local``` - use your FQDN
+```ControlMachine=masternode.master.local``` - use your FQDN
 
-```ControlAddr=111.xx.111.xx``` - use IP of your master_node
+```ControlAddr=111.xx.111.xx``` - use IP of your masternode
 
 Use ```sudo slurmd -C``` to print out machine specs. You should copy specs of all machines in slurm.conf file and modify it.  
 example of how it should look in your config file:
