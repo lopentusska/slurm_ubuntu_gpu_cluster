@@ -265,7 +265,11 @@ I've also added a simple script to check if slurm works that would run ```srun h
 You will need to move the file in the ```/storage```.
 
 Inside the script change:
+
 ```partition```, 
+
 ```nodelist``` (choose on which node to run),
+
 Then you can run script with:
+
 ```sbatch script_slurm_hostname.sh```
