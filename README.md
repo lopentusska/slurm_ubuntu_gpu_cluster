@@ -194,14 +194,16 @@ In ```/storage/slurm_ubuntu_gpu_cluster/configs_services/slurm.conf``` change:
 ```ControlMachine=master_node.master.local``` - use your FQDN
 
 ```ControlAddr=111.xx.111.xx``` - use IP of your master_node
-```
-sudo cp /storage/slurm_ubuntu_gpu_cluster/configs_services/slurm.conf /storage/
-```
+
 Use ```sudo slurmd -C``` to print out machine specs. You should copy it in slurm.conf file and modify it.  
 example of how it should look in your config file:
 ```
 NodeName=master_node NodeAddr=111.xx.111.xx Gres=gpu:1 CPUs=16 Boards=1 SocketsPerBoard=1 CoresPerSocket=8 ThreadsPerCore=2 RealMemory=63502
 ```
+```
+sudo cp /storage/slurm_ubuntu_gpu_cluster/configs_services/slurm.conf /storage/
+```
+
 Edit /storage/slurm_ubuntu_gpu_cluster/configs_services/gres.conf file.
 ```
 NodeName=master_node Name=gpu File=/dev/nvidia0
