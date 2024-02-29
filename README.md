@@ -1,8 +1,8 @@
 notes:
 add ssh set up
 
-# slurm
-Set up gpu cluster on Ubuntu 22.04 using slurm.
+# slurm_gpu_cluster
+Set up gpu cluster on Ubuntu 22.04 using slurm (with cgroups).
 ### Acknowledgements
 Thanks to nateGeorge for the [guide](https://github.com/nateGeorge/slurm_gpu_ubuntu?tab=readme-ov-file) he wrote. I would highly recommend checking it out first as it is way more descriptive.
 # Assumptions:
@@ -10,12 +10,28 @@ Thanks to nateGeorge for the [guide](https://github.com/nateGeorge/slurm_gpu_ubu
 - worker_node 222.xx.222.xx
 - master_node FQDN = master_node.master.local
 # Steps:
+- Install nvidia drivers
+- Set up passwordless ssh
 - SYNC GID/UIDs
 - Synchronize time
 - Set up NFS
 - Set up MUNGE
 - Set up DB for Slurm
 - Set up Slurm
+# Install nvidia drivers
+If you need to install/update nvidia drivers, use this [guide](https://gist.github.com/denguir/b21aa66ae7fb1089655dd9de8351a202#install-nvidia-drivers)
+# Set up passwordless ssh
+on master and worker nodes:
+```
+sudo apt install openssh-server
+sudo ufw enable
+sudo ufw allow ssh
+```
+on master node:
+```
+ssh-keygen
+ssh-copy-id worker_node@222.xx.222.xx
+```
 # Sync GID/UIDs
 ### LDAP Account Manager
 You can follow this [guide](https://computingforgeeks.com/install-and-configure-openldap-server-ubuntu/) to install and configure LDAP Account Manager.  
@@ -57,9 +73,6 @@ sudo mount 111.xx.111.xx:/storage /storage
 echo 111.xx.111.xx:/storage /storage nfs auto,timeo=14,intr 0 0 | sudo tee -a /etc/fstab
 sudo chown worker_node:worker_node /storage/
 ```
-paswordless ssh
-ssh-keygen
-ssh-copy-id woker_node@222.xx.222.xx
 # Set up MUNGE
 Master node:
 ```
