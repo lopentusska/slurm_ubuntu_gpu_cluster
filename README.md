@@ -7,14 +7,14 @@ Thanks to nateGeorge for the [guide](https://github.com/nateGeorge/slurm_gpu_ubu
 - worker_node 222.xx.222.xx
 - master_node FQDN = master_node.master.local
 # Steps:
-- Install nvidia drivers
-- Set up passwordless ssh
-- SYNC GID/UIDs
-- Synchronize time
-- Set up NFS
-- Set up MUNGE
-- Set up DB for Slurm
-- Set up Slurm
+- [Install nvidia drivers](https://github.com/lopentusska/slurm_ubuntu_gpu_cluster?tab=readme-ov-file#install-nvidia-drivers)
+- [Set up passwordless ssh](https://github.com/lopentusska/slurm_ubuntu_gpu_cluster?tab=readme-ov-file#set-up-passwordless-ssh)
+- [SYNC GID/UIDs](https://github.com/lopentusska/slurm_ubuntu_gpu_cluster?tab=readme-ov-file#sync-giduids)
+- [Synchronize time](https://github.com/lopentusska/slurm_ubuntu_gpu_cluster?tab=readme-ov-file#synchronize-time)
+- [Set up NFS](https://github.com/lopentusska/slurm_ubuntu_gpu_cluster?tab=readme-ov-file#set-up-nfs)
+- [Set up MUNGE](https://github.com/lopentusska/slurm_ubuntu_gpu_cluster?tab=readme-ov-file#set-up-munge)
+- [Set up DB for Slurm](https://github.com/lopentusska/slurm_ubuntu_gpu_cluster?tab=readme-ov-file#set-up-db-for-slurm)
+- [Set up Slurm](https://github.com/lopentusska/slurm_ubuntu_gpu_cluster?tab=readme-ov-file#set-up-slurm)
 # Install nvidia drivers
 If you need to install/update nvidia drivers, use this [guide](https://gist.github.com/denguir/b21aa66ae7fb1089655dd9de8351a202#install-nvidia-drivers)
 # Set up passwordless ssh
