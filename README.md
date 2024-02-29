@@ -1,6 +1,3 @@
-notes:
-add ssh set up
-
 # slurm_gpu_cluster
 Set up gpu cluster on Ubuntu 22.04 using slurm (with cgroups).
 ### Acknowledgements
