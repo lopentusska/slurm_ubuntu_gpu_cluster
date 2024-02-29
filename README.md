@@ -1,5 +1,5 @@
 # slurm_gpu_cluster
-Set up gpu cluster on Ubuntu 22.04 using slurm (with cgroups).
+Guide on how to set up gpu cluster on Ubuntu 22.04 using slurm (with cgroups).
 ### Acknowledgements
 Thanks to nateGeorge for the [guide](https://github.com/nateGeorge/slurm_gpu_ubuntu?tab=readme-ov-file) he wrote. I would highly recommend checking it out first as it is very descriptive.
 # Assumptions:
@@ -224,7 +224,7 @@ Create cluster: ```sudo sacctmgr add cluster compute-cluster```
 ```
 sudo vim /etc/default/grub
 ```
-```GRUB_CMDLINE_LINUX_DEFAULT="cgroup_enable=memory systemd.unified_cgroup_hierarchy=0"``` or ```GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1 systemd.unified_cgroup_hierarchy=false"```
+GRUB_CMDLINE_LINUX_DEFAULT="cgroup_enable=memory systemd.unified_cgroup_hierarchy=0"
 ```
 sudo update-grub
 ```
