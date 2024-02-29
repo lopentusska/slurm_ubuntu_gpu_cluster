@@ -6,9 +6,9 @@ Set up gpu cluster on Ubuntu 22.04 using slurm.
 ### Acknowledgements
 Thanks to nateGeorge for the [guide](https://github.com/nateGeorge/slurm_gpu_ubuntu?tab=readme-ov-file) he wrote. I would highly recommend checking out this guide first as it is way more descriptive.
 # Assumptions:
-master_node 111.xx.111.xx
-worker_node 222.xx.222.xx
-master_node FQDN = master_node.master.local
+- master_node 111.xx.111.xx
+- worker_node 222.xx.222.xx
+- master_node FQDN = master_node.master.local
 # Steps:
 - SYNC GID/UIDs
 - Sync time
@@ -18,15 +18,17 @@ master_node FQDN = master_node.master.local
 - Install and Configure Slurm
 # Sync GID/UIDs
 ### LDAP Account Manager
-You can follow this [guide](https://computingforgeeks.com/install-and-configure-openldap-server-ubuntu/) to install and configure LDAP Account Manager.
-Additionally, after step one (Set hostname on the server) of the guide in ```/etc/hosts``` after ```<IP> <FQDN>``` add <name> of the node so it would look like ```111.xx.111.xx master_node.master.local master_node```.
+You can follow this [guide](https://computingforgeeks.com/install-and-configure-openldap-server-ubuntu/) to install and configure LDAP Account Manager.  
+Additionally, after step one (Set hostname on the server) of the guide in ```/etc/hosts``` after ```<IP> <FQDN>``` add ```<name>``` of the node so it would look like ```111.xx.111.xx master_node.master.local master_node```.  
 Also, on worker_node add ip, FQDN and name of the master_node ```111.xx.111.xx master_node.master.local master_node``` in ```etc/hosts```. So in worker_node you would have both master and worker nodes IPs, FQDNs and names.
 ### Create munge and slurm users:
 Master and Worker nodes:
+```
 sudo adduser -u 1111 munge --disabled-password --gecos ""
 sudo adduser -u 1121 slurm --disabled-password --gecos ""
+```
 # Synchronize time
-Synchronize time with NTP using this [guide](https://knowm.org/how-to-synchronize-time-across-a-linux-cluster/)
+Synchronize time with NTP using this [guide](https://knowm.org/how-to-synchronize-time-across-a-linux-cluster/).  
 The guide won't tell you to allow ntp ports but you should do that to make it work.
 ```
 sudo ufw allow ntp
@@ -40,7 +42,7 @@ sudo apt-get install nfs-kernel-server
 sudo mkdir /storage -p
 sudo chown master_node:master_node /storage/
 sudo vim /etc/exports
-/storage	222.xx.222.xx(rw,sync,no_root_squash,no_subtree_check)
+/storage 222.xx.222.xx(rw,sync,no_root_squash,no_subtree_check)
 sudo systemctl restart nfs-kernel-server
 sudo ufw allow from 222.xx.222.xx to any port nfs
 ```
@@ -76,7 +78,7 @@ sudo systemctl start munge
 munge -n | unmunge | grep STATUS
 ```
 # Configure DB for Slurm
-### Clone this repo:
+### Clone this repo with config and service files:
 ```
 cd /storage
 git clone https://github.com/lopentusska/slurm
@@ -98,7 +100,7 @@ grant all privileges on slurm_acct_db.* to 'slurm'@'localhost';
 flush privileges;
 exit
 ```
-Copy db config: ```cp /storage/slurm/configs/slurmdbd.conf /storage
+Copy db config: ```cp /storage/slurm/configs/slurmdbd.conf /storage```
 # Install and Configure Slurm:
 ## Download and install Slurm on master node
 ### Build installation file
@@ -158,7 +160,7 @@ sudo systemctl start slurmd
 ```
 cd /storage
 sudo dpkg -i slurm-23.11.4_1.0_amd64.deb
-sudo cp /storage/slurm/configs/slurmd.service /etc/systemd/system
+sudo cp /storage/slurm/configs_services/slurmd.service /etc/systemd/system
 Open ports for slurm communcation:
 sudo ufw allow from any to any port 6817
 sudo ufw allow from any to any port 6818
@@ -166,13 +168,13 @@ sudo systemctl enable slurmd
 sudo systemctl start slurmd
 ```
 ### Configure Slurm
-In ```slurm.conf``` change:
+In ```slurm.conf``` change:  
 ```ControlMachine=master_node.master.local``` - use your FQDN
 ```ControlAddr=111.xx.111.xx``` - use IP of your master_node
 ```
-sudo cp /storage/slurm/configs/slurm.conf /storage/
+sudo cp /storage/slurm/configs_services/slurm.conf /storage/
 ```
-use ```sudo slurmd -C``` to print out machine specs. You should copy it in slurm.conf file and modify it.
+Use ```sudo slurmd -C``` to print out machine specs. You should copy it in slurm.conf file and modify it.  
 example of how it should look in your config file:
 ```
 NodeName=master_node NodeAddr=111.xx.111.xx Gres=gpu:1 CPUs=16 Boards=1 SocketsPerBoard=1 CoresPerSocket=8 ThreadsPerCore=2 RealMemory=63502
@@ -182,13 +184,13 @@ Edit gres.conf file.
 NodeName=master_node Name=gpu File=/dev/nvidia0
 NodeName=worker_node Name=gpu File=/dev/nvidia0
 ```
-You can use ```nvidia-smi``` to find out the number you should use instead of ```0``` in ```nvidia0```. You will find it to the left of the GPU name.
-Copy .conf files (except slurmdbd.conf) on all machines:
+You can use ```nvidia-smi``` to find out the number you should use instead of ```0``` in ```nvidia0```. You will find it to the left of the GPU name.  
+Copy .conf files (except slurmdbd.conf) on all machines:  
 on worker_node create slurm directory: ```sudo mkdir /etc/slurm/```
 ```
-sudo cp /storage/slurm/configs/cgroup* /etc/slurm/
-sudo cp /storage/slurm/configs/slurm.conf /etc/slurm/
-sudo cp /storage/slurm/configs/gres.conf /etc/slurm/
+sudo cp /storage/slurm/configs_services/cgroup* /etc/slurm/
+sudo cp /storage/slurm/configs_services/slurm.conf /etc/slurm/
+sudo cp /storage/slurm/configs_services/gres.conf /etc/slurm/
 ```
 ```
 sudo mkdir -p /var/spool/slurm/d
