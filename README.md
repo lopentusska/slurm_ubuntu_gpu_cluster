@@ -207,8 +207,8 @@ sudo cp /storage/slurm_ubuntu_gpu_cluster/configs_services/slurm.conf /storage/
 
 Edit /storage/slurm_ubuntu_gpu_cluster/configs_services/gres.conf file.
 ```
-NodeName=master_node Name=gpu File=/dev/nvidia0
-NodeName=worker_node Name=gpu File=/dev/nvidia0
+NodeName=masternode Name=gpu File=/dev/nvidia0
+NodeName=workernode Name=gpu File=/dev/nvidia0
 ```
 You can use ```nvidia-smi``` to find out the number you should use instead of ```0``` in ```nvidia0```. You will find it to the left of the GPU name.  
 Copy .conf files (except slurmdbd.conf) on all machines:  
