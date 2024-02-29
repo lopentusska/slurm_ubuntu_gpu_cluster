@@ -211,6 +211,7 @@ NodeName=masternode Name=gpu File=/dev/nvidia0
 NodeName=workernode Name=gpu File=/dev/nvidia0
 ```
 You can use ```nvidia-smi``` to find out the number you should use instead of ```0``` in ```nvidia0```. You will find it to the left of the GPU name.  
+
 Copy .conf files (except slurmdbd.conf) on all machines:  
 on worker_node create slurm directory: ```sudo mkdir /etc/slurm/```
 ```
