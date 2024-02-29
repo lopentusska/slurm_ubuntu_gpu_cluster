@@ -183,6 +183,8 @@ Open ports for slurm communcation:
 ```
 sudo ufw allow from any to any port 6817
 sudo ufw allow from any to any port 6818
+```
+```
 sudo systemctl enable slurmd
 sudo systemctl start slurmd
 ```
