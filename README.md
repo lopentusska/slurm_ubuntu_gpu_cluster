@@ -223,18 +223,6 @@ sudo cp /storage/slurm_ubuntu_gpu_cluster/configs_services/gres.conf /etc/slurm/
 sudo mkdir -p /var/spool/slurm/d
 sudo chown slurm /var/spool/slurm/d
 ```
-Reboot machines and:  
-on master_node:
-```
-sudo systemctl restart slurmctld
-sudo systemctl restart slurmdbd
-sudo systemctl restart slurmd
-```
-on worker_node:
-```
-sudo systemctl restart slurmd
-```
-Create cluster: ```sudo sacctmgr add cluster compute-cluster```
 ### Configure cgroups
 ```
 sudo vim /etc/default/grub
@@ -247,6 +235,20 @@ then:
 ```
 sudo update-grub
 ```
+### Start Slurm
+Reboot machines and:  
+on master_node:
+```
+sudo systemctl restart slurmctld
+sudo systemctl restart slurmdbd
+sudo systemctl restart slurmd
+```
+on worker_node:
+```
+sudo systemctl restart slurmd
+```
+Create cluster: ```sudo sacctmgr add cluster compute-cluster```
+
 Finally:
 ```
 sudo apt update
