@@ -191,6 +191,7 @@ sudo systemctl start slurmd
 ### Configure Slurm
 In ```/storage/slurm_ubuntu_gpu_cluster/configs_services/slurm.conf``` change:  
 ```ControlMachine=master_node.master.local``` - use your FQDN
+
 ```ControlAddr=111.xx.111.xx``` - use IP of your master_node
 ```
 sudo cp /storage/slurm_ubuntu_gpu_cluster/configs_services/slurm.conf /storage/
