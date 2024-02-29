@@ -205,7 +205,7 @@ After you are done with ```slurm.conf``` editing:
 sudo cp /storage/slurm_ubuntu_gpu_cluster/configs_services/slurm.conf /storage/
 ```
 
-Edit /storage/slurm_ubuntu_gpu_cluster/configs_services/gres.conf file.
+Edit ```/storage/slurm_ubuntu_gpu_cluster/configs_services/gres.conf``` file.
 ```
 NodeName=masternode Name=gpu File=/dev/nvidia0
 NodeName=workernode Name=gpu File=/dev/nvidia0
