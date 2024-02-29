@@ -6,6 +6,7 @@ Thanks to nateGeorge for the [guide](https://github.com/nateGeorge/slurm_gpu_ubu
 - master_node 111.xx.111.xx
 - worker_node 222.xx.222.xx
 - master_node FQDN = master_node.master.local
+- worker_node FQDN = worker_node.worker.local
 # Steps:
 - [Install nvidia drivers](https://github.com/lopentusska/slurm_ubuntu_gpu_cluster?tab=readme-ov-file#install-nvidia-drivers)
 - [Set up passwordless ssh](https://github.com/lopentusska/slurm_ubuntu_gpu_cluster?tab=readme-ov-file#set-up-passwordless-ssh)
@@ -35,7 +36,10 @@ You can follow this [guide](https://computingforgeeks.com/install-and-configure-
 
 Additionally, after step one (Set hostname on the server) of the guide in ```/etc/hosts``` after ```<IP> <FQDN>``` add ```<name>``` of the node so it would look like ```111.xx.111.xx master_node.master.local master_node```.  
 
-Also, on worker_node add IP, FQDN and name of the master_node ```111.xx.111.xx master_node.master.local master_node``` in ```etc/hosts``` and IP, FQDN and name of the worker_node itself. So in worker_node you would have both master and worker nodes IPs, FQDNs and names.
+Also, on worker_node do the following:
+- set FQDN for the worker_node:
+```sudo hostnamectl set-hostname worker_node.worker.local```
+- add IP, FQDN and name of the worker_node ```222.xx.222.xx worker_node.worker.local worker_node``` and add IP, FQDN and name of the master_node ```111.xx.111.xx master_node.master.local master_node``` in ```etc/hosts```. So in worker_node you would have both master and worker nodes IPs, FQDNs and names.
 ### Create munge and slurm users:
 Master and Worker nodes:
 ```
