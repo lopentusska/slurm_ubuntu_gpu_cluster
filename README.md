@@ -16,7 +16,7 @@ Thanks to nateGeorge for the [guide](https://github.com/nateGeorge/slurm_gpu_ubu
 - [Set up DB for Slurm](https://github.com/lopentusska/slurm_ubuntu_gpu_cluster?tab=readme-ov-file#set-up-db-for-slurm)
 - [Set up Slurm](https://github.com/lopentusska/slurm_ubuntu_gpu_cluster?tab=readme-ov-file#set-up-slurm)
 # Install nvidia drivers
-If you need to install/update nvidia drivers, use this [guide](https://gist.github.com/denguir/b21aa66ae7fb1089655dd9de8351a202#install-nvidia-drivers)
+If you need to install nvidia drivers, use this [guide](https://gist.github.com/denguir/b21aa66ae7fb1089655dd9de8351a202#install-nvidia-drivers).
 # Set up passwordless ssh
 on master and worker nodes:
 ```
